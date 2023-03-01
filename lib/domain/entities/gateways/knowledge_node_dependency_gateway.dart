@@ -12,4 +12,11 @@ abstract class KnowledgeNodeDependencyGateway<T extends KnowledgeNodeDependency>
 
   final Set<T> dependencies;
 
+  @override
+  String toString() {
+    return 'KnowledgeNodeDependencyGateway{dependencies: $dependencies}';
+  }
+
+  String getGatewayId();
+
 }

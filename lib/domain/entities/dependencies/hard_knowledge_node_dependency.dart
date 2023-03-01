@@ -7,5 +7,5 @@ import 'package:knowledge_dependency_graph_manager/domain/entities/dependencies/
 class HardKnowledgeNodeDependency extends KnowledgeNodeDependency{
   HardKnowledgeNodeDependency(super.id, super.rating);
 
-
+  static const dependencyId = "hardDependency";
 }

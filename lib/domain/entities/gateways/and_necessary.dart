@@ -6,5 +6,8 @@ import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/know
 
 class KnowledgeNodeDependencyGatewayAndNecessary<T extends KnowledgeNodeDependency> extends KnowledgeNodeDependencyGateway<T>{
   KnowledgeNodeDependencyGatewayAndNecessary(super.dependencies);
+  static const gatewayId = "andNecessary";
 
+  @override
+  String getGatewayId() => gatewayId;
 }

@@ -19,6 +19,7 @@ void main() {
               {HardKnowledgeNodeDependency("b", 1)})
         },
       );
+      print(knowledgeNode);
     },
   );
 }

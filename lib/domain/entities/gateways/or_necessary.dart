@@ -6,5 +6,8 @@ import 'knowledge_node_dependency_gateway.dart';
 
 class KnowledgeNodeDependencyGatewayOrNecessary<T extends KnowledgeNodeDependency> extends KnowledgeNodeDependencyGateway<T>{
   KnowledgeNodeDependencyGatewayOrNecessary(super.dependencies);
+  static const gatewayId = "orNecessary";
 
+  @override
+  String getGatewayId() => gatewayId;
 }

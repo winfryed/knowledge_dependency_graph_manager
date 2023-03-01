@@ -4,8 +4,11 @@
 abstract class KnowledgeNodeDependency{
 
   KnowledgeNodeDependency(this.id, this.rating);
-
   final String id;
   final int rating;
 
+  @override
+  String toString() {
+    return 'KnowledgeNodeDependency{id: $id, rating: $rating}';
+  }
 }
