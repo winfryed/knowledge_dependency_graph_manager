@@ -11,29 +11,48 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
+This project is to aid the managing of dependent knowledge graphs, especially for the management
+of Kanten und Knoten UG knowledge graphs and is designed to support such primarily but not exclusively
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+-Has classes to model knowledge graphs with a host of dependencies
+
+-Has classes to enable up- and download of graphs and its subcomponents to firebase and DBs
+
+-Offers a front-end for graph view and editing
+
+-Has APIs for other K & K applications
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Clone this project and aid its progression to enable people around the world to map knowledge in 
+various domains of interest in high quality dependency knowledge graphs!
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
+Creating a note in a math graph:
 ```dart
-const like = 'sample';
+KnowledgeNode knowledgeNode = KnowledgeNode(
+    id: "d9i9w29i9a0d9isda",
+    title: "Ableiten einer Funktion n-ten Grades",
+    description: "",
+    gatewaysPredecessors: {
+      KnowledgeNodeDependencyGatewayAndNecessary<HardKnowledgeNodeDependency>(
+            {
+              KnowledgeNodeDependencyGatewayAndNecessary({
+                HardKnowledgeNodeDependency("this node is a necessary condition combined with the node under this for the successor node", 3),
+                HardKnowledgeNodeDependency("with the previous node this node is a necessary condition for the successor node", 2)
+              }),
+              KnowledgeNodeDependencyGatewayOrNecessary({
+                HardKnowledgeNodeDependency("either this node or the next node is necessary for the successor node", 4),
+                HardKnowledgeNodeDependency("either this node or the previous node is necessary for the successor node", 3)
+              })
+            }
+        )
+    },
+);
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+This project is managed by the company Kanten und Knoten UG (haftungsbeschränkt)
