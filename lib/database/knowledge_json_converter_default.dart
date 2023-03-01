@@ -10,38 +10,36 @@ import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/or_s
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
 
 import '../domain/entities/gateways/or_necessary.dart';
-import 'json.dart';
+import 'knowledge_json_converter.dart';
 
 class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
-
   ///converts to json
 
   @override
   Map<String, dynamic> fromKnowledgeNode(KnowledgeNode knowledgeNode) {
-
     Map<String, dynamic> output = {};
 
     output["id"] = knowledgeNode.id;
 
-    if(knowledgeNode.title!=null) {
+    if (knowledgeNode.title != null) {
       output["title"] = knowledgeNode.title;
     }
-    if(knowledgeNode.description!=null) {
+    if (knowledgeNode.description != null) {
       output["description"] = knowledgeNode.description;
     }
 
-    if(knowledgeNode.gatewaysSuccessors!=null) {
-      if(knowledgeNode.gatewaysSuccessors!.isNotEmpty) {
+    if (knowledgeNode.gatewaysSuccessors != null) {
+      if (knowledgeNode.gatewaysSuccessors!.isNotEmpty) {
         output["gatewaysSuccessors"] = <dynamic>[];
-        for(var v in knowledgeNode.gatewaysSuccessors!) {
+        for (var v in knowledgeNode.gatewaysSuccessors!) {
           output["gatewaysSuccessors"].add(fromKnowledgeNodeGateway(v));
         }
       }
     }
-    if(knowledgeNode.gatewaysPredecessors!=null) {
-      if(knowledgeNode.gatewaysPredecessors!.isNotEmpty) {
+    if (knowledgeNode.gatewaysPredecessors != null) {
+      if (knowledgeNode.gatewaysPredecessors!.isNotEmpty) {
         output["gatewaysPredecessors"] = <dynamic>[];
-        for(var v in knowledgeNode.gatewaysPredecessors!) {
+        for (var v in knowledgeNode.gatewaysPredecessors!) {
           output["gatewaysPredecessors"].add(fromKnowledgeNodeGateway(v));
         }
       }
@@ -100,35 +98,36 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
   ///converts from json
 
   @override
-  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String, dynamic> knowledgeNodeDependencyJson) {
-    if (knowledgeNodeDependencyJson["type"]!=HardKnowledgeNodeDependency.dependencyId){
+  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(
+      Map<String, dynamic> knowledgeNodeDependencyJson) {
+    if (knowledgeNodeDependencyJson["type"] !=
+        HardKnowledgeNodeDependency.dependencyId) {
       throw UnimplementedError(
           "The type ${knowledgeNodeDependencyJson["type"]} is not supported yet.");
     }
-    return HardKnowledgeNodeDependency(knowledgeNodeDependencyJson["id"],knowledgeNodeDependencyJson["rating"]);
+    return HardKnowledgeNodeDependency(knowledgeNodeDependencyJson["id"],
+        knowledgeNodeDependencyJson["rating"]);
   }
 
   @override
-  KnowledgeNodeDependencyGateway<KnowledgeNodeDependency> fromKnowledgeNodeGatewayJson(Map<String, dynamic> knowledgeNodeGatewayJson) {
-    Set<KnowledgeNodeDependency> dependencies= {};
-    for (var v in knowledgeNodeGatewayJson["dependencies"]){
+  KnowledgeNodeDependencyGateway<KnowledgeNodeDependency>
+      fromKnowledgeNodeGatewayJson(
+          Map<String, dynamic> knowledgeNodeGatewayJson) {
+    Set<KnowledgeNodeDependency> dependencies = {};
+    for (var v in knowledgeNodeGatewayJson["dependencies"]) {
       dependencies.add(fromKnowledgeNodeDependencyJson(v));
     }
     if (knowledgeNodeGatewayJson["type"] ==
         KnowledgeNodeDependencyGatewayAndNecessary.gatewayId) {
-
       return KnowledgeNodeDependencyGatewayAndNecessary(dependencies);
     } else if (knowledgeNodeGatewayJson["type"] ==
         KnowledgeNodeDependencyGatewayOrNecessary.gatewayId) {
-
       return KnowledgeNodeDependencyGatewayOrNecessary(dependencies);
     } else if (knowledgeNodeGatewayJson["type"] ==
         KnowledgeNodeDependencyGatewayAndSufficient.gatewayId) {
-
       return KnowledgeNodeDependencyGatewayAndSufficient(dependencies);
     } else if (knowledgeNodeGatewayJson["type"] ==
         KnowledgeNodeDependencyGatewayOrSufficient.gatewayId) {
-
       return KnowledgeNodeDependencyGatewayOrSufficient(dependencies);
     } else {
       throw UnimplementedError(
@@ -138,40 +137,36 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
 
   @override
   KnowledgeNode fromKnowledgeNodeJson(Map<String, dynamic> knowledgeNodeJson) {
-    //TODO: find a way to make optional way parameters really optional
-    String title="";
-    String description="";
-    Set<KnowledgeNodeDependencyGateway> succSet={};
-    Set<KnowledgeNodeDependencyGateway> predSet={};
+    String? title;
+    String? description;
+    Set<KnowledgeNodeDependencyGateway> successorSet = {};
+    Set<KnowledgeNodeDependencyGateway> predecessor = {};
+    if(knowledgeNodeJson["id"]==null) {
+      throw ArgumentError("id == null");
+    }
 
-    if(knowledgeNodeJson["title"]!=null) {
-      title=knowledgeNodeJson["title"];
-    }
-    if(knowledgeNodeJson["description"]!=null) {
-      description=knowledgeNodeJson["description"];
-    }
-    if(knowledgeNodeJson["gatewaysSuccessors"]!=null) {
-      if(knowledgeNodeJson["gatewaysSuccessors"]!.isNotEmpty) {
-        for(var v in knowledgeNodeJson["gatewaysSuccessors"]) {
-          succSet.add(fromKnowledgeNodeGatewayJson(v));
+
+    title = knowledgeNodeJson["title"];
+    description = knowledgeNodeJson["description"];
+    if (knowledgeNodeJson["gatewaysSuccessors"] != null) {
+      if (knowledgeNodeJson["gatewaysSuccessors"]!.isNotEmpty) {
+        for (var v in knowledgeNodeJson["gatewaysSuccessors"]) {
+          successorSet.add(fromKnowledgeNodeGatewayJson(v));
         }
       }
     }
-    if(knowledgeNodeJson["gatewaysPredecessors"]!=null) {
-      if(knowledgeNodeJson["gatewaysPredecessors"]!.isNotEmpty) {
-        for(var v in knowledgeNodeJson["gatewaysPredecessors"]) {
-          predSet.add(fromKnowledgeNodeGatewayJson(v));
+    if (knowledgeNodeJson["gatewaysPredecessors"] != null) {
+      if (knowledgeNodeJson["gatewaysPredecessors"]!.isNotEmpty) {
+        for (var v in knowledgeNodeJson["gatewaysPredecessors"]) {
+          predecessor.add(fromKnowledgeNodeGatewayJson(v));
         }
       }
     }
     return KnowledgeNode(
         id: knowledgeNodeJson["id"],
         title: title,
-        description:description,
-        gatewaysPredecessors: predSet,
-        gatewaysSuccessors: succSet
-    );
+        description: description,
+        gatewaysPredecessors: predecessor.isEmpty?null:predecessor,
+        gatewaysSuccessors: successorSet.isEmpty?null:predecessor);
   }
-
-  
 }

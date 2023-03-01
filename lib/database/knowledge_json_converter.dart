@@ -9,10 +9,15 @@ import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/know
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
 
 abstract class KnowledgeJsonConverter{
+  static KnowledgeJsonConverter get instance{
+    if(_instance==null) {
+      throw StateError("KnowledgeJsonConverter must be initialized.");
+    }
+    return _instance!;
+  }
+  static KnowledgeJsonConverter? _instance;
 
-  static late KnowledgeJsonConverter instance;
-
-  static init(KnowledgeJsonConverter converter) => instance=converter;
+  static init(KnowledgeJsonConverter converter) => _instance=converter;
 
   Map<String,dynamic> fromKnowledgeNode(KnowledgeNode knowledgeNode);
 
