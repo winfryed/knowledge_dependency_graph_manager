@@ -7,9 +7,6 @@ abstract class KnowledgeNodeDependencyGateway<T extends KnowledgeNodeDependency>
 
   KnowledgeNodeDependencyGateway(this.dependencies);
 
-
-
-
   final Set<T> dependencies;
 
   @override
