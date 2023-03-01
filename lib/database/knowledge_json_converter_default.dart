@@ -12,6 +12,7 @@ import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_nod
 import '../domain/entities/gateways/or_necessary.dart';
 import 'knowledge_json_converter.dart';
 
+/// written for firebase db in mind, converts to and fro json for various entities
 class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
   ///converts to json
 

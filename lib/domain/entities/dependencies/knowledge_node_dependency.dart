@@ -1,6 +1,7 @@
 // @author Matthias Weigt 01.03.23
 // All rights reserved ©2023
 
+///base for dependencies
 abstract class KnowledgeNodeDependency{
 
   KnowledgeNodeDependency(this.id, this.rating);
