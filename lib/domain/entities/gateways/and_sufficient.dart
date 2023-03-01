@@ -5,6 +5,7 @@
 import '../dependencies/knowledge_node_dependency.dart';
 import 'knowledge_node_dependency_gateway.dart';
 
+///propositional logic operand AND and sufficient condition for succeeding node
 class KnowledgeNodeDependencyGatewayAndSufficient<T extends KnowledgeNodeDependency> extends KnowledgeNodeDependencyGateway<T>{
   KnowledgeNodeDependencyGatewayAndSufficient(super.dependencies);
   static const gatewayId = "andSufficient";

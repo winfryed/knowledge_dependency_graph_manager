@@ -8,6 +8,8 @@ import 'package:knowledge_dependency_graph_manager/domain/entities/dependencies/
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/knowledge_node_dependency_gateway.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
 
+/// converts various entities to a db specified in an instantiation of this class
+/// converts from entity to Json/Map data structure and back
 abstract class KnowledgeJsonConverter{
 
   static late KnowledgeJsonConverter instance;

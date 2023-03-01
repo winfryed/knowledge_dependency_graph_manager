@@ -3,6 +3,7 @@
 
 import '../dependencies/knowledge_node_dependency.dart';
 
+///is a base for a collection of edges (here [dependencies]) in a layer that make up a classic propositional logic operand for the succeeding node
 abstract class KnowledgeNodeDependencyGateway<T extends KnowledgeNodeDependency>{
 
   KnowledgeNodeDependencyGateway(this.dependencies);

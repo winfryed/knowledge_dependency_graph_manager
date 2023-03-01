@@ -4,6 +4,7 @@
 
 import 'package:knowledge_dependency_graph_manager/domain/entities/dependencies/knowledge_node_dependency.dart';
 
+///models a hard dependency, which is a dependency that is causal, not merely correlated
 class HardKnowledgeNodeDependency extends KnowledgeNodeDependency{
   HardKnowledgeNodeDependency(super.id, super.rating);
 
