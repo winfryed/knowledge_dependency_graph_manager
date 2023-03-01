@@ -42,4 +42,18 @@ void main() {
           })})));
     },
   );
+  test(
+    "json to node",
+      () {
+        print(KnowledgeJsonConverter.instance.fromKnowledgeNodeJson(KnowledgeJsonConverter.instance.fromKnowledgeNode(
+            KnowledgeNode(id: "a",gatewaysPredecessors: {KnowledgeNodeDependencyGatewayAndSufficient({
+              HardKnowledgeNodeDependency("a", 1),
+              HardKnowledgeNodeDependency("b", 1)
+            }),KnowledgeNodeDependencyGatewayOrNecessary({
+              HardKnowledgeNodeDependency("a", 1),
+              HardKnowledgeNodeDependency("b", 1)
+            })})))
+        );
+      }
+  );
 }

@@ -13,11 +13,13 @@ import '../domain/entities/gateways/or_necessary.dart';
 import 'json.dart';
 
 class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
+
+  ///converts to json
+
   @override
   Map<String, dynamic> fromKnowledgeNode(KnowledgeNode knowledgeNode) {
 
     Map<String, dynamic> output = {};
-
 
     output["id"] = knowledgeNode.id;
 
@@ -44,12 +46,7 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
         }
       }
     }
-
-
     return output;
-
-
-
   }
 
   @override
@@ -99,4 +96,82 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
 
     return output;
   }
+
+  ///converts from json
+
+  @override
+  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String, dynamic> knowledgeNodeDependencyJson) {
+    if (knowledgeNodeDependencyJson["type"]!=HardKnowledgeNodeDependency.dependencyId){
+      throw UnimplementedError(
+          "The type ${knowledgeNodeDependencyJson["type"]} is not supported yet.");
+    }
+    return HardKnowledgeNodeDependency(knowledgeNodeDependencyJson["id"],knowledgeNodeDependencyJson["rating"]);
+  }
+
+  @override
+  KnowledgeNodeDependencyGateway<KnowledgeNodeDependency> fromKnowledgeNodeGatewayJson(Map<String, dynamic> knowledgeNodeGatewayJson) {
+    Set<KnowledgeNodeDependency> dependencies= {};
+    for (var v in knowledgeNodeGatewayJson["dependencies"]){
+      dependencies.add(fromKnowledgeNodeDependencyJson(v));
+    }
+    if (knowledgeNodeGatewayJson["type"] ==
+        KnowledgeNodeDependencyGatewayAndNecessary.gatewayId) {
+
+      return KnowledgeNodeDependencyGatewayAndNecessary(dependencies);
+    } else if (knowledgeNodeGatewayJson["type"] ==
+        KnowledgeNodeDependencyGatewayOrNecessary.gatewayId) {
+
+      return KnowledgeNodeDependencyGatewayOrNecessary(dependencies);
+    } else if (knowledgeNodeGatewayJson["type"] ==
+        KnowledgeNodeDependencyGatewayAndSufficient.gatewayId) {
+
+      return KnowledgeNodeDependencyGatewayAndSufficient(dependencies);
+    } else if (knowledgeNodeGatewayJson["type"] ==
+        KnowledgeNodeDependencyGatewayOrSufficient.gatewayId) {
+
+      return KnowledgeNodeDependencyGatewayOrSufficient(dependencies);
+    } else {
+      throw UnimplementedError(
+          "The type ${knowledgeNodeGatewayJson["type"]} is not supported yet.");
+    }
+  }
+
+  @override
+  KnowledgeNode fromKnowledgeNodeJson(Map<String, dynamic> knowledgeNodeJson) {
+    //TODO: find a way to make optional way parameters really optional
+    String title="";
+    String description="";
+    Set<KnowledgeNodeDependencyGateway> succSet={};
+    Set<KnowledgeNodeDependencyGateway> predSet={};
+
+    if(knowledgeNodeJson["title"]!=null) {
+      title=knowledgeNodeJson["title"];
+    }
+    if(knowledgeNodeJson["description"]!=null) {
+      description=knowledgeNodeJson["description"];
+    }
+    if(knowledgeNodeJson["gatewaysSuccessors"]!=null) {
+      if(knowledgeNodeJson["gatewaysSuccessors"]!.isNotEmpty) {
+        for(var v in knowledgeNodeJson["gatewaysSuccessors"]) {
+          succSet.add(fromKnowledgeNodeGatewayJson(v));
+        }
+      }
+    }
+    if(knowledgeNodeJson["gatewaysPredecessors"]!=null) {
+      if(knowledgeNodeJson["gatewaysPredecessors"]!.isNotEmpty) {
+        for(var v in knowledgeNodeJson["gatewaysPredecessors"]) {
+          predSet.add(fromKnowledgeNodeGatewayJson(v));
+        }
+      }
+    }
+    return KnowledgeNode(
+        id: knowledgeNodeJson["id"],
+        title: title,
+        description:description,
+        gatewaysPredecessors: predSet,
+        gatewaysSuccessors: succSet
+    );
+  }
+
+  
 }

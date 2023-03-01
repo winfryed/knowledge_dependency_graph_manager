@@ -12,19 +12,17 @@ abstract class KnowledgeJsonConverter{
 
   static late KnowledgeJsonConverter instance;
 
-
   static init(KnowledgeJsonConverter converter) => instance=converter;
-
-
 
   Map<String,dynamic> fromKnowledgeNode(KnowledgeNode knowledgeNode);
 
-
   Map<String,dynamic> fromKnowledgeNodeDependency(KnowledgeNodeDependency knowledgeNodeDependency);
-
 
   Map<String,dynamic> fromKnowledgeNodeGateway(KnowledgeNodeDependencyGateway knowledgeNodeDependencyGateway);
 
+  KnowledgeNode fromKnowledgeNodeJson(Map<String,dynamic> knowledgeNodeJson);
 
+  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String,dynamic> knowledgeNodeDependencyJson);
 
+  KnowledgeNodeDependencyGateway fromKnowledgeNodeGatewayJson(Map<String,dynamic> knowledgeNodeGatewayJson);
 }
