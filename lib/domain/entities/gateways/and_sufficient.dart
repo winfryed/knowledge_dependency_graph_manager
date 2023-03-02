@@ -2,14 +2,25 @@
 // All rights reserved ©2023
 
 
-import '../dependencies/knowledge_node_dependency.dart';
 import 'knowledge_node_dependency_gateway.dart';
 
 ///propositional logic operand AND and sufficient condition for succeeding node
-class KnowledgeNodeDependencyGatewayAndSufficient<T extends KnowledgeNodeDependency> extends KnowledgeNodeDependencyGateway<T>{
+class KnowledgeNodeDependencyGatewayAndSufficient extends KnowledgeNodeDependencyGateway{
   KnowledgeNodeDependencyGatewayAndSufficient(super.dependencies);
-  static const gatewayId = "andSufficient";
+  static const id= "andSufficient";
 
   @override
-  String getGatewayId() => gatewayId;
+  bool get isAndGateway => true;
+
+  @override
+  bool get isNecessaryGateway => false;
+
+  @override
+  bool get isOrGateway => false;
+
+  @override
+  bool get isSufficientGateway => true;
+
+  @override
+  String get gatewayId => id;
 }
