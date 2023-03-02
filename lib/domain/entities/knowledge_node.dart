@@ -2,6 +2,7 @@
 // All rights reserved ©2023
 
 
+import 'exercises/exercise.dart';
 import 'gateways/knowledge_node_dependency_gateway.dart';
 
 /// a node that represents a granular piece of knowledge, ideally one that is so small, as to leave the learner with a next viable step in learning,
@@ -13,12 +14,16 @@ class KnowledgeNode{
       {required this.id,
       this.title,
       this.description,
+      this.rating,
+      this.exerciseList,
       this.gatewaysSuccessors,
       this.gatewaysPredecessors});
 
   final String id;
   final String? title;
   final String? description;
+  final int? rating;
+  final List<KnowledgeNodeExercise>? exerciseList;
   final Set<KnowledgeNodeDependencyGateway>? gatewaysSuccessors;
   final Set<KnowledgeNodeDependencyGateway>? gatewaysPredecessors;
 
