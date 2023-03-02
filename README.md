@@ -29,7 +29,7 @@ Clone this project and aid its progression to enable people around the world to 
 various domains of interest in high quality dependency knowledge graphs!
 
 ## Usage
-
+TODO: no longer accurate! Correct for changes
 Creating a note in a math graph:
 ```dart
 KnowledgeNode knowledgeNode = KnowledgeNode(
