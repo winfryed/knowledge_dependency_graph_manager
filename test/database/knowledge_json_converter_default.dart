@@ -4,6 +4,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:knowledge_dependency_graph_manager/database/knowledge_json_converter.dart';
 import 'package:knowledge_dependency_graph_manager/database/knowledge_json_converter_default.dart';
+import 'package:knowledge_dependency_graph_manager/domain/entities/exercises/exercise.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/knowledge_node_dependency_gateway.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/or_necessary.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
@@ -33,6 +34,9 @@ void main() {
       KnowledgeNode(id: "a", hardForwardDependencyGateway: gateway1);
   KnowledgeNode knowledgeNodeEmpty =
       KnowledgeNode(id: "a", hardForwardDependencyGateway: gatewayEmpty);
+
+
+  KnowledgeNodeExercise exercise = KnowledgeNodeExercise("a", "4", 4);
 
   test(
     "from HardKnowledgeNodeDependency to json",
@@ -82,5 +86,10 @@ void main() {
     "from empty KnowledgeNodeDependencyGateway to json and back",
     () => KnowledgeJsonConverter.instance.toKnowledgeNode(
         KnowledgeJsonConverter.instance.fromKnowledgeNode(knowledgeNodeEmpty)),
+  );
+  test(
+    "from KnowledgeNodeExercise to json and back",
+    () => KnowledgeJsonConverter.instance.toExercise(
+        KnowledgeJsonConverter.instance.fromExercise(exercise)),
   );
 }
