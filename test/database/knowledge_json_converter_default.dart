@@ -59,28 +59,28 @@ void main() {
 
   test(
     "from HardKnowledgeNodeDependency to json and back",
-    () => KnowledgeJsonConverter.instance.fromKnowledgeNodeDependencyJson(
+    () => KnowledgeJsonConverter.instance.toKnowledgeNodeDependency(
         KnowledgeJsonConverter.instance
             .fromKnowledgeNodeDependency(hardKnowledgeNodeDependency1)),
   );
   test(
     "from KnowledgeNodeDependencyGateway to json and back",
-    () => KnowledgeJsonConverter.instance.fromKnowledgeNodeGatewayJson(
+    () => KnowledgeJsonConverter.instance.toKnowledgeNodeGateway(
         KnowledgeJsonConverter.instance.fromKnowledgeNodeGateway(gateway1)),
   );
   test(
     "from empty KnowledgeNodeDependencyGateway to json and back",
-    () => KnowledgeJsonConverter.instance.fromKnowledgeNodeGatewayJson(
+    () => KnowledgeJsonConverter.instance.toKnowledgeNodeGateway(
         KnowledgeJsonConverter.instance.fromKnowledgeNodeGateway(gatewayEmpty)),
   );
   test(
     "from KnowledgeNodeDependencyGateway to json and back",
-    () => KnowledgeJsonConverter.instance.fromKnowledgeNodeJson(
+    () => KnowledgeJsonConverter.instance.toKnowledgeNode(
         KnowledgeJsonConverter.instance.fromKnowledgeNode(knowledgeNode)),
   );
   test(
     "from empty KnowledgeNodeDependencyGateway to json and back",
-    () => KnowledgeJsonConverter.instance.fromKnowledgeNodeJson(
+    () => KnowledgeJsonConverter.instance.toKnowledgeNode(
         KnowledgeJsonConverter.instance.fromKnowledgeNode(knowledgeNodeEmpty)),
   );
 }

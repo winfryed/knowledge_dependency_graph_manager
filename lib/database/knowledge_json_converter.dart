@@ -28,16 +28,16 @@ abstract class KnowledgeJsonConverter{
 
   Map<String,dynamic> fromKnowledgeNodeGateway(KnowledgeNodeDependencyGateway knowledgeNodeDependencyGateway);
 
-  KnowledgeNode fromKnowledgeNodeJson(Map<String,dynamic> knowledgeNodeJson);
+  KnowledgeNode toKnowledgeNode(Map<String,dynamic> knowledgeNodeJson);
 
-  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String,dynamic> knowledgeNodeDependencyJson);
+  KnowledgeNodeDependency toKnowledgeNodeDependency(Map<String,dynamic> knowledgeNodeDependencyJson);
 
-  KnowledgeNodeDependencyGateway fromKnowledgeNodeGatewayJson(Map<String,dynamic> knowledgeNodeGatewayJson);
+  KnowledgeNodeDependencyGateway toKnowledgeNodeGateway(Map<String,dynamic> knowledgeNodeGatewayJson);
 
 
   Map<String,dynamic> fromExercise(KnowledgeNodeExercise knowledgeNodeExercise);
 
 
-  KnowledgeNodeExercise fromExerciseJson(Map<String,dynamic> knowledgeNodeExerciseJson);
+  KnowledgeNodeExercise toExercise(Map<String,dynamic> knowledgeNodeExerciseJson);
 
 }

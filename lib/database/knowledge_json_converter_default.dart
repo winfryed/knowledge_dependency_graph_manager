@@ -80,11 +80,11 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
 
   @override
   KnowledgeNodeDependencyGateway
-      fromKnowledgeNodeGatewayJson(
+      toKnowledgeNodeGateway(
           Map<String, dynamic> knowledgeNodeGatewayJson) {
     Set<KnowledgeNodeDependency> dependencies = {};
     for (var v in knowledgeNodeGatewayJson["dependencies"]) {
-      dependencies.add(fromKnowledgeNodeDependencyJson(v));
+      dependencies.add(toKnowledgeNodeDependency(v));
     }
     if (knowledgeNodeGatewayJson["type"] ==
         KnowledgeNodeDependencyGatewayAndNecessary.id) {
@@ -105,7 +105,7 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
   }
 
   @override
-  KnowledgeNode fromKnowledgeNodeJson(Map<String, dynamic> knowledgeNodeJson) {
+  KnowledgeNode toKnowledgeNode(Map<String, dynamic> knowledgeNodeJson) {
     String? title;
     String? description;
     KnowledgeNodeDependencyGateway? hardForwardDependencyGateway;
@@ -118,7 +118,7 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
     title = knowledgeNodeJson["title"];
     description = knowledgeNodeJson["description"];
     if (knowledgeNodeJson["hardForwardDependencyGateway"] != null) {
-      hardForwardDependencyGateway = fromKnowledgeNodeGatewayJson(knowledgeNodeJson["hardForwardDependencyGateway"]);
+      hardForwardDependencyGateway = toKnowledgeNodeGateway(knowledgeNodeJson["hardForwardDependencyGateway"]);
     }
     if (knowledgeNodeJson["backwardDependencies"] != null) {
       if (knowledgeNodeJson["backwardDependencies"]!.isNotEmpty) {
@@ -147,7 +147,7 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
   }
 
   @override
-  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String, dynamic> knowledgeNodeDependencyJson) {
+  KnowledgeNodeDependency toKnowledgeNodeDependency(Map<String, dynamic> knowledgeNodeDependencyJson) {
     if(knowledgeNodeDependencyJson["nodeId"]==null) {
       throw ArgumentError("nodeId == null");
     }
@@ -168,7 +168,7 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
   }
 
   @override
-  KnowledgeNodeExercise fromExerciseJson(Map<String, dynamic> knowledgeNodeExerciseJson) {
+  KnowledgeNodeExercise toExercise(Map<String, dynamic> knowledgeNodeExerciseJson) {
     if(knowledgeNodeExerciseJson["assignmentText"] == null) {
       throw ArgumentError("solutionText == null");
     }
