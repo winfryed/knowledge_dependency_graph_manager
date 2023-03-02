@@ -2,6 +2,7 @@
 // All rights reserved ©2023
 
 import 'package:flutter/material.dart';
+import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/random/random_generators.dart';
 
 import '../../../domain/entities/knowledge_node.dart';
@@ -70,6 +71,18 @@ class _KnowledgeNodeEditorPageState extends State<KnowledgeNodeEditorPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(text: "hi there ",style: Theme.of(context).textTheme.headlineMedium),
+                                WidgetSpan(
+                                  child: Math.tex(titleController.text,
+                                      mathStyle: MathStyle.text,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium),
+                                ),
+                                TextSpan(text: " oh man",style: Theme.of(context).textTheme.headlineMedium)
+                              ])),
                               Text(
                                 descriptionController.text,
                                 style:
@@ -80,10 +93,11 @@ class _KnowledgeNodeEditorPageState extends State<KnowledgeNodeEditorPage> {
                         ),
                       ),
                     ),
-
                     FloatingActionButton(
                       onPressed: () {
-                        widget.onAdd(KnowledgeNode(title: titleController.text,description: descriptionController.text,
+                        widget.onAdd(KnowledgeNode(
+                            title: titleController.text,
+                            description: descriptionController.text,
                             id: nodeId ?? RandomHashGenerator().get()));
                       },
                     )
