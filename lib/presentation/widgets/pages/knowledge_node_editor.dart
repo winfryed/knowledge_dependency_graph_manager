@@ -1,7 +1,6 @@
 // @author Matthias Weigt 02.03.23
 // All rights reserved ©2023
 
-import 'package:catex/catex.dart';
 import 'package:flutter/material.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/random/random_generators.dart';
 
@@ -71,7 +70,6 @@ class _KnowledgeNodeEditorPageState extends State<KnowledgeNodeEditorPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              CaTeX("x2"),
                               Text(
                                 descriptionController.text,
                                 style:
