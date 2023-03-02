@@ -71,18 +71,7 @@ class _KnowledgeNodeEditorPageState extends State<KnowledgeNodeEditorPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(text: "hi there ",style: Theme.of(context).textTheme.headlineMedium),
-                                WidgetSpan(
-                                  child: Math.tex(titleController.text,
-                                      mathStyle: MathStyle.text,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium),
-                                ),
-                                TextSpan(text: " oh man",style: Theme.of(context).textTheme.headlineMedium)
-                              ])),
+                              Text(titleController.text),
                               Text(
                                 descriptionController.text,
                                 style:

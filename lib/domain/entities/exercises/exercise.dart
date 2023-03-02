@@ -7,17 +7,5 @@ class KnowledgeNodeExercise {
 
   final String assignmentText;
   final String solutionText;
-  final String rating;
-  Stopwatch stopwatch = Stopwatch();
-  Duration timeElapsed = const Duration(seconds: 0);
-
-  void startStopwatch(){
-    stopwatch.start();
-  }
-
-  Duration stopStopwatch(){
-    stopwatch.stop();
-    timeElapsed=Duration(milliseconds: stopwatch.elapsedMilliseconds);
-    return timeElapsed;
-  }
+  final int rating;
 }
