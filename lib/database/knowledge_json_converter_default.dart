@@ -77,8 +77,6 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
     return output;
   }
 
-  ///converts from json
-
 
   @override
   KnowledgeNodeDependencyGateway
