@@ -26,7 +26,7 @@ class KnowledgeFrameworkManagerApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true,colorSchemeSeed: Colors.blueAccent,brightness: Brightness.dark
       ),
       home: Scaffold(body: KnowledgeNodeEditorPage(onAdd: (knowledgeNode) {
-
+        KnowledgeDatabase.instance.setKnowledgeNode(knowledgeNode);
       },),),
     );
   }
