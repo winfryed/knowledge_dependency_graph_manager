@@ -1,6 +1,7 @@
 // @author Matthias Weigt 01.03.23
 // All rights reserved ©2023
 
+import 'package:knowledge_dependency_graph_manager/domain/entities/exercises/exercise.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/and_necessary.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/and_sufficient.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/knowledge_node_dependency_gateway.dart';
@@ -157,5 +158,28 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
     }
 
     return KnowledgeNodeDependency(knowledgeNodeDependencyJson["nodeId"], knowledgeNodeDependencyJson["rating"]);
+  }
+
+  @override
+  Map<String, dynamic> fromExercise(KnowledgeNodeExercise knowledgeNodeExercise) {
+    Map<String, dynamic> output= {};
+    output["assignmentText"] = knowledgeNodeExercise.assignmentText;
+    output["solutionText"] = knowledgeNodeExercise.solutionText;
+    output["rating"] = knowledgeNodeExercise.rating;
+    return output;
+  }
+
+  @override
+  KnowledgeNodeExercise fromExerciseJson(Map<String, dynamic> knowledgeNodeExerciseJson) {
+    if(knowledgeNodeExerciseJson["assignmentText"] == null) {
+      throw ArgumentError("solutionText == null");
+    }
+    if(knowledgeNodeExerciseJson["solutionText"] == null) {
+      throw ArgumentError("solutionText == null");
+    }
+    if(knowledgeNodeExerciseJson["rating"] == null) {
+      throw ArgumentError("rating == null");
+    }
+    return KnowledgeNodeExercise(knowledgeNodeExerciseJson["assignmentText"], knowledgeNodeExerciseJson["solutionText"], knowledgeNodeExerciseJson["rating"]);
   }
 }

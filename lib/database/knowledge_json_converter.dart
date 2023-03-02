@@ -4,6 +4,7 @@
 
 
 
+import 'package:knowledge_dependency_graph_manager/domain/entities/exercises/exercise.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node_dependency.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/knowledge_node_dependency_gateway.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
@@ -32,4 +33,11 @@ abstract class KnowledgeJsonConverter{
   KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String,dynamic> knowledgeNodeDependencyJson);
 
   KnowledgeNodeDependencyGateway fromKnowledgeNodeGatewayJson(Map<String,dynamic> knowledgeNodeGatewayJson);
+
+
+  Map<String,dynamic> fromExercise(KnowledgeNodeExercise knowledgeNodeExercise);
+
+
+  KnowledgeNodeExercise fromExerciseJson(Map<String,dynamic> knowledgeNodeExerciseJson);
+
 }
