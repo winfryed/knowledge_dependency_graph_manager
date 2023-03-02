@@ -4,7 +4,7 @@
 
 
 
-import 'package:knowledge_dependency_graph_manager/domain/entities/dependencies/knowledge_node_dependency.dart';
+import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node_dependency.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/knowledge_node_dependency_gateway.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
 

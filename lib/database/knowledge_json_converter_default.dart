@@ -1,13 +1,12 @@
 // @author Matthias Weigt 01.03.23
 // All rights reserved ©2023
 
-import 'package:knowledge_dependency_graph_manager/domain/entities/dependencies/hard_knowledge_node_dependency.dart';
-import 'package:knowledge_dependency_graph_manager/domain/entities/dependencies/knowledge_node_dependency.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/and_necessary.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/and_sufficient.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/knowledge_node_dependency_gateway.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/gateways/or_sufficient.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node.dart';
+import 'package:knowledge_dependency_graph_manager/domain/entities/knowledge_node_dependency.dart';
 
 import '../domain/entities/gateways/or_necessary.dart';
 import 'knowledge_json_converter.dart';
@@ -29,57 +28,38 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
       output["description"] = knowledgeNode.description;
     }
 
-    if (knowledgeNode.gatewaysSuccessors != null) {
-      if (knowledgeNode.gatewaysSuccessors!.isNotEmpty) {
-        output["gatewaysSuccessors"] = <dynamic>[];
-        for (var v in knowledgeNode.gatewaysSuccessors!) {
-          output["gatewaysSuccessors"].add(fromKnowledgeNodeGateway(v));
-        }
-      }
+
+    if(knowledgeNode.hardForwardDependencyGateway!=null) {
+      output["hardForwardDependencyGateway"] = fromKnowledgeNodeGateway(knowledgeNode.hardForwardDependencyGateway!);
     }
-    if (knowledgeNode.gatewaysPredecessors != null) {
-      if (knowledgeNode.gatewaysPredecessors!.isNotEmpty) {
-        output["gatewaysPredecessors"] = <dynamic>[];
-        for (var v in knowledgeNode.gatewaysPredecessors!) {
-          output["gatewaysPredecessors"].add(fromKnowledgeNodeGateway(v));
+    if(knowledgeNode.backwardDependencies!=null) {
+      if(knowledgeNode.backwardDependencies!.isNotEmpty) {
+        output["backwardDependencies"] = <dynamic>[];
+        for(var v in knowledgeNode.backwardDependencies!) {
+          output["backwardDependencies"].add(v);
         }
       }
     }
     return output;
   }
 
-  @override
-  Map<String, dynamic> fromKnowledgeNodeDependency(
-      KnowledgeNodeDependency knowledgeNodeDependency) {
-    if (knowledgeNodeDependency.runtimeType != HardKnowledgeNodeDependency) {
-      throw UnimplementedError(
-          "The type ${knowledgeNodeDependency.runtimeType} is not supported yet.");
-    }
-
-    Map<String, dynamic> output = {};
-    output["type"] = HardKnowledgeNodeDependency.dependencyId;
-    output["id"] = knowledgeNodeDependency.id;
-    output["rating"] = knowledgeNodeDependency.rating;
-
-    return output;
-  }
 
   @override
   Map<String, dynamic> fromKnowledgeNodeGateway(
       KnowledgeNodeDependencyGateway knowledgeNodeDependencyGateway) {
     String? type;
-    if (knowledgeNodeDependencyGateway.getGatewayId() ==
-        KnowledgeNodeDependencyGatewayAndNecessary.gatewayId) {
-      type = KnowledgeNodeDependencyGatewayAndNecessary.gatewayId;
-    } else if (knowledgeNodeDependencyGateway.getGatewayId() ==
-        KnowledgeNodeDependencyGatewayOrNecessary.gatewayId) {
-      type = KnowledgeNodeDependencyGatewayOrNecessary.gatewayId;
-    } else if (knowledgeNodeDependencyGateway.getGatewayId() ==
-        KnowledgeNodeDependencyGatewayAndSufficient.gatewayId) {
-      type = KnowledgeNodeDependencyGatewayAndSufficient.gatewayId;
-    } else if (knowledgeNodeDependencyGateway.getGatewayId() ==
-        KnowledgeNodeDependencyGatewayOrSufficient.gatewayId) {
-      type = KnowledgeNodeDependencyGatewayOrSufficient.gatewayId;
+    if (knowledgeNodeDependencyGateway.gatewayId ==
+        KnowledgeNodeDependencyGatewayAndNecessary.id) {
+      type = KnowledgeNodeDependencyGatewayAndNecessary.id;
+    } else if (knowledgeNodeDependencyGateway.gatewayId ==
+        KnowledgeNodeDependencyGatewayOrNecessary.id) {
+      type = KnowledgeNodeDependencyGatewayOrNecessary.id;
+    } else if (knowledgeNodeDependencyGateway.gatewayId ==
+        KnowledgeNodeDependencyGatewayAndSufficient.id) {
+      type = KnowledgeNodeDependencyGatewayAndSufficient.id;
+    } else if (knowledgeNodeDependencyGateway.gatewayId ==
+        KnowledgeNodeDependencyGatewayOrSufficient.id) {
+      type = KnowledgeNodeDependencyGatewayOrSufficient.id;
     } else {
       throw UnimplementedError(
           "The type ${knowledgeNodeDependencyGateway.runtimeType} is not supported yet.");
@@ -98,20 +78,9 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
 
   ///converts from json
 
-  @override
-  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(
-      Map<String, dynamic> knowledgeNodeDependencyJson) {
-    if (knowledgeNodeDependencyJson["type"] !=
-        HardKnowledgeNodeDependency.dependencyId) {
-      throw UnimplementedError(
-          "The type ${knowledgeNodeDependencyJson["type"]} is not supported yet.");
-    }
-    return HardKnowledgeNodeDependency(knowledgeNodeDependencyJson["id"],
-        knowledgeNodeDependencyJson["rating"]);
-  }
 
   @override
-  KnowledgeNodeDependencyGateway<KnowledgeNodeDependency>
+  KnowledgeNodeDependencyGateway
       fromKnowledgeNodeGatewayJson(
           Map<String, dynamic> knowledgeNodeGatewayJson) {
     Set<KnowledgeNodeDependency> dependencies = {};
@@ -119,16 +88,16 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
       dependencies.add(fromKnowledgeNodeDependencyJson(v));
     }
     if (knowledgeNodeGatewayJson["type"] ==
-        KnowledgeNodeDependencyGatewayAndNecessary.gatewayId) {
+        KnowledgeNodeDependencyGatewayAndNecessary.id) {
       return KnowledgeNodeDependencyGatewayAndNecessary(dependencies);
     } else if (knowledgeNodeGatewayJson["type"] ==
-        KnowledgeNodeDependencyGatewayOrNecessary.gatewayId) {
+        KnowledgeNodeDependencyGatewayOrNecessary.id) {
       return KnowledgeNodeDependencyGatewayOrNecessary(dependencies);
     } else if (knowledgeNodeGatewayJson["type"] ==
-        KnowledgeNodeDependencyGatewayAndSufficient.gatewayId) {
+        KnowledgeNodeDependencyGatewayAndSufficient.id) {
       return KnowledgeNodeDependencyGatewayAndSufficient(dependencies);
     } else if (knowledgeNodeGatewayJson["type"] ==
-        KnowledgeNodeDependencyGatewayOrSufficient.gatewayId) {
+        KnowledgeNodeDependencyGatewayOrSufficient.id) {
       return KnowledgeNodeDependencyGatewayOrSufficient(dependencies);
     } else {
       throw UnimplementedError(
@@ -140,8 +109,8 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
   KnowledgeNode fromKnowledgeNodeJson(Map<String, dynamic> knowledgeNodeJson) {
     String? title;
     String? description;
-    Set<KnowledgeNodeDependencyGateway> successorSet = {};
-    Set<KnowledgeNodeDependencyGateway> predecessor = {};
+    KnowledgeNodeDependencyGateway? hardForwardDependencyGateway;
+    Set<String> backwardDependencies={};
     if(knowledgeNodeJson["id"]==null) {
       throw ArgumentError("id == null");
     }
@@ -149,17 +118,13 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
 
     title = knowledgeNodeJson["title"];
     description = knowledgeNodeJson["description"];
-    if (knowledgeNodeJson["gatewaysSuccessors"] != null) {
-      if (knowledgeNodeJson["gatewaysSuccessors"]!.isNotEmpty) {
-        for (var v in knowledgeNodeJson["gatewaysSuccessors"]) {
-          successorSet.add(fromKnowledgeNodeGatewayJson(v));
-        }
-      }
+    if (knowledgeNodeJson["hardForwardDependencyGateway"] != null) {
+      hardForwardDependencyGateway = fromKnowledgeNodeGatewayJson(knowledgeNodeJson["hardForwardDependencyGateway"]);
     }
-    if (knowledgeNodeJson["gatewaysPredecessors"] != null) {
-      if (knowledgeNodeJson["gatewaysPredecessors"]!.isNotEmpty) {
-        for (var v in knowledgeNodeJson["gatewaysPredecessors"]) {
-          predecessor.add(fromKnowledgeNodeGatewayJson(v));
+    if (knowledgeNodeJson["backwardDependencies"] != null) {
+      if (knowledgeNodeJson["backwardDependencies"]!.isNotEmpty) {
+        for (var v in knowledgeNodeJson["backwardDependencies"]) {
+          backwardDependencies.add(v);
         }
       }
     }
@@ -167,7 +132,30 @@ class KnowledgeJsonConverterDefault extends KnowledgeJsonConverter {
         id: knowledgeNodeJson["id"],
         title: title,
         description: description,
-        gatewaysPredecessors: predecessor.isEmpty?null:predecessor,
-        gatewaysSuccessors: successorSet.isEmpty?null:predecessor);
+        backwardDependencies:backwardDependencies.isEmpty?null:backwardDependencies,
+        hardForwardDependencyGateway: hardForwardDependencyGateway
+    );
+  }
+
+  @override
+  Map<String, dynamic> fromKnowledgeNodeDependency(KnowledgeNodeDependency knowledgeNodeDependency) {
+    Map<String, dynamic> output = {};
+
+    output["nodeId"] = knowledgeNodeDependency.nodeId;
+    output["rating"] = knowledgeNodeDependency.rating;
+
+    return output;
+  }
+
+  @override
+  KnowledgeNodeDependency fromKnowledgeNodeDependencyJson(Map<String, dynamic> knowledgeNodeDependencyJson) {
+    if(knowledgeNodeDependencyJson["nodeId"]==null) {
+      throw ArgumentError("nodeId == null");
+    }
+    if(knowledgeNodeDependencyJson["rating"]==null) {
+      throw ArgumentError("rating == null");
+    }
+
+    return KnowledgeNodeDependency(knowledgeNodeDependencyJson["nodeId"], knowledgeNodeDependencyJson["rating"]);
   }
 }
