@@ -15,6 +15,7 @@ class RenderedTex extends StatelessWidget {
   }
 
   RichText _compile(String text,TextStyle? textStyle,BuildContext context) {
+    //todo 02.03.23 17:28 von @Matthias to @Yuri: Implement me.
     throw UnimplementedError();
   }
 }
