@@ -25,7 +25,7 @@ class RenderedTex extends StatelessWidget {
     }
     List<String> elements = text.split("\$");
 
-    print(elements);
+    // print(elements);
 
     List<InlineSpan> spans = [];
 
