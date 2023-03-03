@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:knowledge_dependency_graph_manager/database/knowledge_database.dart';
 import 'package:knowledge_dependency_graph_manager/database/knowledge_json_converter.dart';
 import 'package:knowledge_dependency_graph_manager/database/knowledge_json_converter_default.dart';
+import 'package:knowledge_dependency_graph_manager/presentation/widgets/pages/knowledge_exercise_editor.dart';
 import 'package:knowledge_dependency_graph_manager/presentation/widgets/pages/knowledge_node_editor.dart';
 
 void main() {
@@ -25,8 +26,8 @@ class KnowledgeFrameworkManagerApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(useMaterial3: true,colorSchemeSeed: Colors.blueAccent,brightness: Brightness.dark
       ),
-      home: Scaffold(body: KnowledgeNodeEditorPage(onAdd: (knowledgeNode) {
-        KnowledgeDatabase.instance.setKnowledgeNode(knowledgeNode);
+      home: Scaffold(body: KnowledgeExerciseEditorPage(onAdd: (exercise) {
+        // KnowledgeDatabase.instance.setKnowledgeNode(knowledgeNode);
       },),),
     );
   }
