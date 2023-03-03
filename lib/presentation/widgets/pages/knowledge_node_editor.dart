@@ -2,10 +2,10 @@
 // All rights reserved ©2023
 
 import 'package:flutter/material.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:knowledge_dependency_graph_manager/domain/entities/random/random_generators.dart';
 
 import '../../../domain/entities/knowledge_node.dart';
+import '../../../domain/entities/markdown/markdown_compiler.dart';
 import 'knowledge_manager_app_page.dart';
 
 class KnowledgeNodeEditorPage extends StatefulWidget {
@@ -40,6 +40,7 @@ class _KnowledgeNodeEditorPageState extends State<KnowledgeNodeEditorPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(compileMarkdown(titleController.text));
     return LayoutBuilder(
       builder: (p0, p1) => KnowledgeManagerAppPage(
           title: "Knowledge Node Editor Page",
@@ -71,18 +72,7 @@ class _KnowledgeNodeEditorPageState extends State<KnowledgeNodeEditorPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(text: "hi there ",style: Theme.of(context).textTheme.headlineMedium),
-                                WidgetSpan(
-                                  child: Math.tex(titleController.text,
-                                      mathStyle: MathStyle.text,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium),
-                                ),
-                                TextSpan(text: " oh man",style: Theme.of(context).textTheme.headlineMedium)
-                              ])),
+                              const Text("INSERT COMPILED HERE"),
                               Text(
                                 descriptionController.text,
                                 style:
