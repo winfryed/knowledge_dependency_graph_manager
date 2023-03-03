@@ -31,9 +31,9 @@ class RenderedTex extends StatelessWidget {
 
     for(int i = 0;i<elements.length;i++) {
       if(i.isEven) {
-        spans.add(TextSpan(text:elements[i],style: defaultStyle,));
+        spans.add(TextSpan(text:elements[i],style: textStyle??defaultStyle,));
       } else {
-        spans.add(WidgetSpan(alignment: PlaceholderAlignment.middle,child: Math.tex(elements[i],textStyle: defaultStyle,mathStyle: MathStyle.display,)));
+        spans.add(WidgetSpan(alignment: PlaceholderAlignment.middle,child: Math.tex(elements[i],textStyle: textStyle??defaultStyle,mathStyle: MathStyle.display,)));
       }
 
     }
